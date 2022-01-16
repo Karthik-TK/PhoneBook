@@ -39,7 +39,7 @@ const EditContact = ({ id, editStatus }) => {
             .then(res => {
                 setDrawerStatus(false)
                 editStatus(true)
-                toast.success(`Edited ${contactID.id}`, { position: toast.POSITION.TOP_RIGHT, autoClose: 8000 });
+                toast.success(`Edited Existing Contact!`, { position: toast.POSITION.TOP_RIGHT, autoClose: 8000 });
             })
             .catch(error => {
                 console.log("Error :", error)
