@@ -2,9 +2,10 @@ import * as React from 'react';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import { Box, Card, CardContent, CardActions, Button, Typography } from '@mui/material';
-import MockData from '../MockData.json'
+import { Avatar, Box, Card, CardContent, CardActions, Button, Grid } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import MockData from '../mockData.json';
+import EditContact from './EditContact';
 
 function stringToColor(string) {
     let hash = 0;
@@ -40,7 +41,7 @@ function ContactView() {
         <>
             {MockData.map((data) => {
                 return (
-                    <Card sx={{ display: 'flex' }} style={{ backgroundColor: '#e1f5fe', margin: '12px' }}>
+                    <Card key={data.id} sx={{ display: 'flex' }} style={{ backgroundColor: '#e0e0e0', margin: '12px' }} elevation={4}>
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             <CardContent>
                                 <ListItem>
@@ -48,17 +49,18 @@ function ContactView() {
                                         <Avatar variant="square" {...stringAvatar(data.firstName + ' ' + data.lastName)} />
                                     </ListItemAvatar>
                                     <ListItemText primary={data.firstName + ' ' + data.lastName} secondary={data.mobile} />
-                                    {/* <Typography component="div" variant="h5">
-                                        {data.firstName + ' ' + data.lastName}
-                                    </Typography>
-                                    <Typography variant="subtitle1" color="text.secondary" component="div">
-                                        {data.mobile}
-                                    </Typography> */}
                                 </ListItem>
                             </CardContent>
-                            {/* <CardActions>
-                                <Button size="small">Edit {data.id}</Button>
-                            </CardActions> */}
+                            <CardActions>
+                                <Grid container spacing={2}>
+                                    <Grid item xs>
+                                        <EditContact id={data.id} />
+                                    </Grid>
+                                    <Grid item xs>
+                                        <Button color="error" size="small" startIcon={<DeleteIcon />} >Delete</Button>
+                                    </Grid>
+                                </Grid>
+                            </CardActions>
                         </Box>
                     </Card>
                 )

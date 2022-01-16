@@ -2,20 +2,26 @@ import React from 'react';
 import { Container, Typography } from '@mui/material';
 import HeaderBar from './Header';
 import ContactView from '../ContactView';
+import AddContact from '../AddContact';
 
 
 function LayoutView() {
     return (
-        <div>
+        <React.Fragment>
             <HeaderBar />
-            <Container style={{ marginTop: "12px" }}>
-                <Typography variant="h4" gutterBottom component="div" textAlign={"center"}>
-                    Your Contacts
-                </Typography>
-                <ContactView />
-            </Container>
+            <div className='App'>
+                <Container style={{ marginTop: "12px" }}>
+                    <Typography variant="h4" gutterBottom component="div">
+                        Your Contacts
+                    </Typography>
+                    <hr />
+                    <AddContact />
+                    <br />
+                    <ContactView />
+                </Container>
 
-        </div>
+            </div>
+        </React.Fragment>
     )
 }
 

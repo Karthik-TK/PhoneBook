@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, Container, Drawer, Stack, TextField, Typography } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
-function AddContact() {
-
+const EditContact = (props) => {
     const [state, setState] = useState(false);
+    const [contact, setContact] = useState();
 
-    const toggleDrawer = (open) => (event) => {
+    const toggleDrawer = (open, id) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
+        setContact(id)
         setState(open);
     };
 
     return (
         <div>
-            <Button onClick={toggleDrawer(true)} color='success' variant='contained' startIcon={<AddIcon />}>
-                Add Contact
-            </Button>
+            <Button color="primary" size="small" startIcon={<EditIcon />} onClick={toggleDrawer(true)}>Edit</Button>
             <Drawer
                 anchor={'right'}
                 open={state}
@@ -35,7 +34,7 @@ function AddContact() {
                     >
                         <Stack spacing={4}>
                             <Typography variant="h4" gutterBottom component="div" textAlign={"center"}>
-                                Add Contact
+                                Edit Contact
                             </Typography>
                             <TextField
                                 required
@@ -63,8 +62,9 @@ function AddContact() {
                     </Box>
                 </Container>
             </Drawer>
+
         </div>
     )
 }
 
-export default AddContact
+export default EditContact
