@@ -3,7 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import SearchContact from '../SearchContact';
 
 export default function HeaderBar() {
   return (
@@ -18,7 +17,6 @@ export default function HeaderBar() {
           >
             Phonebook
           </Typography>
-          <SearchContact />
         </Toolbar>
       </AppBar>
     </Box>

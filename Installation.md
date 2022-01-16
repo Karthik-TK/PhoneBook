@@ -11,6 +11,6 @@ Second, In a new terminal, run the json-server through:
 
 ### `json-server --watch mockData.json --port 3100`
 
-Second, In a new terminal, start the app with:
+Third, In a new terminal, start the app with:
 
 ### `yarn start`

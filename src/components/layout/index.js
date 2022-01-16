@@ -1,8 +1,9 @@
 import React from 'react';
-import { Container, Typography } from '@mui/material';
+import { Container, Divider, Stack, Typography } from '@mui/material';
 import HeaderBar from './Header';
 import ContactView from '../ContactView';
 import AddContact from '../AddContact';
+import SearchContact from '../SearchContact';
 
 
 function LayoutView() {
@@ -14,9 +15,13 @@ function LayoutView() {
                     <Typography variant="h4" gutterBottom component="div">
                         Your Contacts
                     </Typography>
-                    <hr />
-                    <AddContact />
-                    <br />
+                    <Divider />
+                    <div style={{ margin: '16px' }}>
+                        <Stack direction="row" justifyContent="center" spacing={12}>
+                            <AddContact />
+                            <SearchContact />
+                        </Stack>
+                    </div>
                     <ContactView />
                 </Container>
 
