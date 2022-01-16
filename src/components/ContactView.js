@@ -3,13 +3,14 @@ import axios from 'axios';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import { Alert, AlertTitle, Avatar, Box, Card, CardContent, CardActions, Button, IconButton, Stack, Paper, Typography } from '@mui/material';
+import { Alert, AlertTitle, Avatar, Box, Card, CardContent, CardActions, Button, IconButton, Tooltip, Stack, Paper, ToggleButton } from '@mui/material';
 import AddContact from './AddContact';
 import SearchContact from './SearchContact';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditContact from './EditContact';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -46,6 +47,7 @@ function stringAvatar(name) {
 
 function ContactView() {
     const [contactsData, setContactsData] = useState([]);
+    const [sortData, setSortData] = React.useState(true);
 
     const getContacts = () => {
         axios.get("http://localhost:3100/contacts")
@@ -64,13 +66,13 @@ function ContactView() {
     const deleteContact = (id) => {
         axios.delete(`http://localhost:3100/contacts/${id}/`,)
             .then(res => {
-                toast.success('Contact Deleted!', { position: toast.POSITION.TOP_RIGHT, autoClose: 8000 })
+                toast.success('Contact Deleted!', { position: toast.POSITION.TOP_RIGHT, autoClose: 8000 });
+                getContacts();
             })
             .catch(error => {
                 console.log("Error :", error)
-                toast.error('Error', { position: toast.POSITION.TOP_CENTER, autoClose: false })
             })
-        getContacts();
+
     }
 
     const editStatus = useCallback(event => {
@@ -93,6 +95,30 @@ function ContactView() {
         }, 1000);
     }, []);
 
+    const sortContacts = (sort) => {
+        if (sort === true) {
+            axios.get(`http://localhost:3100/contacts?_sort=firstName,lastName&_order=asc`)
+                .then((res) => {
+                    setContactsData(res.data)
+                })
+                .catch((error) => {
+                    console.log("Error :", error)
+                });
+        } else {
+            axios.get(`http://localhost:3100/contacts?_sort=firstName,lastName&_order=desc`)
+                .then((res) => {
+                    setContactsData(res.data)
+                })
+                .catch((error) => {
+                    console.log("Error :", error)
+                });
+        }
+    }
+
+    const refreshData = () => {
+        getContacts();
+    }
+
 
     return (
         <>
@@ -100,9 +126,24 @@ function ContactView() {
                 <div style={{ padding: '12px' }}>
                     <Stack direction="row" justifyContent="center" alignItems="center" spacing={6}>
                         <AddContact addStatus={addStatus} />
-                        <IconButton aria-label="sortAsc">
-                            <ArrowUpwardIcon />
-                        </IconButton>
+                        <Tooltip title="Sort Contacts">
+                            <ToggleButton
+                                size='small'
+                                value="check"
+                                selected={sortData}
+                                onChange={() => {
+                                    setSortData(!sortData);
+                                    sortContacts(!sortData)
+                                }}
+                            >
+                                {sortData ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+                            </ToggleButton>
+                        </Tooltip>
+                        <Tooltip title="Refresh Contacts">
+                            <IconButton aria-label="refresh" size="large" onClick={refreshData}>
+                                <RefreshIcon />
+                            </IconButton>
+                        </Tooltip>
                         <SearchContact searchText={searchText} />
                     </Stack>
                 </div>
